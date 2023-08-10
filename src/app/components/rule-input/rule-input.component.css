@@ -1,0 +1,36 @@
+.rule-container {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+
+  align-items: center;
+  gap: 1rem;
+
+  width: max-content;
+  max-width: 100%;
+  margin: auto;
+}
+
+.check-box {
+  width: 3rem;
+  height: 3rem;
+
+  border-radius: 2px;
+
+  background-color: black;
+}
+
+.check-box.in-progress {
+  background-color: gray;
+}
+
+.check-box.attempted {
+  background-color: yellow;
+}
+
+.check-box.succeeded {
+  background-color: green;
+}
+
+.rule-text {
+  margin: 0;
+}

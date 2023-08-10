@@ -1,0 +1,7 @@
+<div *ngFor="let rule of currentRules$ | async"
+     class="rule-container">
+  <div class="check-box"
+       *ngIf="rule.index | stateClass | async as ruleClass"
+       [ngClass]="[ ruleClass ]"></div>
+  <p class="rule-text">{{ rule.text }}</p>
+</div>

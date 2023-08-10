@@ -1,15 +1,17 @@
-import { Component } from '@angular/core';
-import { RulesService } from './services/rules/rules.service';
+import { Component, OnInit } from '@angular/core';
+import { StorageService } from './services/storage/storage.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'gracle';
 
-  rules = this._rulesService.rules$;
+  constructor(private _storageService: StorageService) { }
 
-  constructor(private _rulesService: RulesService) { }
+  ngOnInit(): void {
+      this._storageService.getState();
+  }
 }
