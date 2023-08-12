@@ -12,8 +12,10 @@
   height: 3rem;
 
   border-radius: 2px;
+}
 
-  background-color: black;
+.check-box:hover {
+  cursor: pointer;
 }
 
 .check-box.in-progress {
@@ -21,10 +23,12 @@
 }
 
 .check-box.attempted {
+  animation: yellow-resize ease-out .2s;
   background-color: var(--yellow);
 }
 
 .check-box.succeeded {
+  animation: green-resize ease-out .2s;
   background-color: var(--green);
 }
 
@@ -36,4 +40,29 @@
 .line {
   height: 2px;
   background-color: var(--light-gray);
+  border-radius: 4px;
+}
+
+@keyframes green-resize {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes yellow-resize {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
