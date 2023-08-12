@@ -6,12 +6,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RuleInputComponent } from './components/rule-input/rule-input.component';
 import { StateClassPipe } from './pipes/stateClass/state-class.pipe';
+import { OutputDisplayComponent } from './components/output-display/output-display.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RuleInputComponent,
-    StateClassPipe
+    StateClassPipe,
+    OutputDisplayComponent
   ],
   imports: [
     BrowserModule,

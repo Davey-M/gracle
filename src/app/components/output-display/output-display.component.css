@@ -1,0 +1,15 @@
+.display-text {
+  text-align: center;
+
+  margin-top: 2rem;
+}
+
+.link {
+  color: var(--blue);
+  text-decoration: underline;
+
+  text-align: center;
+  cursor: pointer;
+
+  margin-bottom: 2rem;
+}

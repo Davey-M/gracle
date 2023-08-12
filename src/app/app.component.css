@@ -1,3 +1,11 @@
+.fill-screen {
+  min-height: 100vh;
+
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-rows: max-content 1fr max-content;
+}
+
 .header {
   text-align: center;
 }
@@ -5,6 +13,7 @@
 .container {
   max-width: 600px;
   margin: auto;
+  height: 100%;
 }
 
 .inner-container {
