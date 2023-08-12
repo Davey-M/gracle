@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, map } from 'rxjs';
-import { gracleState, iGracleTile, iRule } from 'src/app/models/gracle';
+import { map } from 'rxjs';
 import { RulesService } from 'src/app/services/rules/rules.service';
+import { StateService } from 'src/app/services/state/state.service';
 
 @Component({
   selector: 'app-rule-input',
@@ -15,11 +15,16 @@ export class RuleInputComponent implements OnInit {
   );
 
   constructor(
-    private _rulesService: RulesService
+    private _rulesService: RulesService,
+    private _stateService: StateService,
   ) { }
 
   ngOnInit(): void {
     this._rulesService.getRules();
+  }
+
+  updateTile(index: number) {
+    this._stateService.updateTile(index);
   }
 
 }
