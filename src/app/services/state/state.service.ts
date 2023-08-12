@@ -25,19 +25,21 @@ export class StateService {
   ) { }
 
   private _formatTileState(rules: iRule[], today: iGracle): iGracleTile[] {
-    if (today.results.length === 0) {
-      return rules
-        .filter(rule => rule.deprecated === false)
-        .map(rule => {
+    return rules
+      .filter(rule => rule.deprecated === false)
+      .map((rule, index) => {
+        const currentTile = today.results.find(tile => tile.ruleIndex === index);
+
+        if (currentTile) {
+          return currentTile;
+        }
+        else {
           return {
             ruleIndex: rule.index,
             state: gracleState.inProgress,
           }
-        });
-    }
-    else {
-      return today.results;
-    }
+        }
+      });
   }
 
   updateTile(ruleIndex: number) {

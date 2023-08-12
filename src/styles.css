@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+
+  color: var(--black);
+
+  font-family: 'Lato', sans-serif;
+}
+
+p {
+  font-weight: 300;
+}
+
+:root {
+  --light-gray: #a9b7cb;
+  --gray: #454c55;
+  --yellow: #fbc335;
+  --green: #0e9749;
+
+  --black: #333;
+}

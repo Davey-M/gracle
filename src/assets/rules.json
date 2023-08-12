@@ -3,5 +3,25 @@
     "text": "This is rule one. No rules should ever be removed from this list. If a rule needs to be removed it should be marked as deprecated instead.",
     "index": 0,
     "deprecated": false
+  },  
+  {
+    "text": "This is rule two.",
+    "index": 1,
+    "deprecated": false
+  },  
+  {
+    "text": "This is rule three.",
+    "index": 2,
+    "deprecated": false
+  },  
+  {
+    "text": "This is rule four.",
+    "index": 3,
+    "deprecated": false
+  },
+  {
+    "text": "This rule is just a test",
+    "index": 4,
+    "deprecated": false
   }
 ]

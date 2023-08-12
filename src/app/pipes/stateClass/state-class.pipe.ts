@@ -14,9 +14,6 @@ export class StateClassPipe implements PipeTransform {
     return this._stateService.tileState$.pipe(
       map(tiles => {
         const current = tiles.find(tile => tile.ruleIndex === value);
-
-        console.log(current);
-  
         switch (current?.state) {
           case gracleState.inProgress:
             return 'in-progress';

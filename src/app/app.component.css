@@ -1,0 +1,12 @@
+.header {
+  text-align: center;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+}
+
+.inner-container {
+  margin: 0 2rem;
+}
