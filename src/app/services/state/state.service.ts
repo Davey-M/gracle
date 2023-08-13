@@ -27,8 +27,8 @@ export class StateService {
   private _formatTileState(rules: iRule[], today: iGracle): iGracleTile[] {
     return rules
       .filter(rule => rule.deprecated === false)
-      .map((rule, index) => {
-        const currentTile = today.results.find(tile => tile.ruleIndex === index);
+      .map(rule => {
+        const currentTile = today.results.find(tile => tile.ruleIndex === rule.index);
 
         if (currentTile) {
           return currentTile;
