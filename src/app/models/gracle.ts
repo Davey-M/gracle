@@ -17,6 +17,7 @@ export enum gracleState {
 
 export interface iRule {
   text: string;
+  summary: string;
   index: number;
   deprecated: boolean;
 }
