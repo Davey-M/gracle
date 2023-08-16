@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { combineLatest, map, skipWhile, tap } from 'rxjs';
-import { RulesService } from '../rules/rules.service';
+import { RULES_VERSION, RulesService } from '../rules/rules.service';
 import { StorageService } from '../storage/storage.service';
 import { gracleState, iGracle, iGracleTile, iRule } from 'src/app/models/gracle';
 
@@ -26,17 +26,17 @@ export class StateService {
 
   private _formatTileState(rules: iRule[], today: iGracle): iGracleTile[] {
     return rules
-      .filter(rule => rule.deprecated === false)
-      .map(rule => {
-        const currentTile = today.results.find(tile => tile.ruleIndex === rule.index);
+      .map((_, ruleIndex) => {
+        const currentTile = today.results.find((tile, i) => tile.ruleIndex === i);
 
         if (currentTile) {
           return currentTile;
         }
         else {
           return {
-            ruleIndex: rule.index,
+            ruleIndex,
             state: gracleState.inProgress,
+            version: RULES_VERSION
           }
         }
       });
@@ -51,6 +51,7 @@ export class StateService {
         return {
           ruleIndex,
           state: this._switchTileState(tile.state),
+          version: tile.version
         };
       } else {
         return tile;

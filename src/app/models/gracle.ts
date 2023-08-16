@@ -7,6 +7,7 @@ export interface iGracle {
 export interface iGracleTile {
   ruleIndex: number;
   state: gracleState;
+  version: string;
 }
 
 export enum gracleState {
@@ -18,6 +19,4 @@ export enum gracleState {
 export interface iRule {
   text: string;
   summary: string;
-  index: number;
-  deprecated: boolean;
 }
