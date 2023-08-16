@@ -42,7 +42,7 @@ export class StorageService {
 
   getDateString(): string {
     const todaysDate = new Date();
-    return `${todaysDate.getFullYear()}-${todaysDate.getMonth()}-${todaysDate.getDay()}`;
+    return `${todaysDate.getFullYear()}-${todaysDate.getMonth()}-${todaysDate.getDate()}`;
   }
 
   saveState() {
