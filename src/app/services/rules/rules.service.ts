@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError } from 'rxjs';
 import { iRule } from 'src/app/models/gracle';
 
-export const RULES_VERSION = "1.0";
+// version will always be in format "v{version number}"
+export const RULES_VERSION = "v1";
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +32,6 @@ export class RulesService {
     } else {
       // this method returns a promise that resolves once the new assets are gathered
       return new Promise<iRule[]>((resolve, reject) => {
-
         // get the rules
         const subscription = this._http.get<iRule[]>(`/assets/rules.${version}.json`)
           .pipe(

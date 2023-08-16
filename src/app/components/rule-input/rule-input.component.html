@@ -1,8 +1,8 @@
-<div *ngFor="let rule of currentRules$ | async"
+<div *ngFor="let rule of currentRules$ | async; index as i"
      class="rule-container">
   <p class="rule-text">{{ rule.text }}</p>
   <div class="line"></div>
   <div class="check-box"
-       [ngClass]="[ rule.index | stateClass | async ]"
-       (click)="updateTile(rule.index)"></div>
+       [ngClass]="[ i | stateClass | async ]"
+       (click)="updateTile(i)"></div>
 </div>

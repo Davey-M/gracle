@@ -54,7 +54,7 @@ export class OutputDisplayComponent implements OnInit, OnDestroy {
     const outputArray: string[] = [];
 
     for (let tile of tiles) {
-      const rule = rules.find(r => r.index === tile.ruleIndex);
+      const rule = rules[tile.ruleIndex];
 
       outputArray.push(`${this._getTileColor(tile.state)} ${rule?.summary}`);
     }

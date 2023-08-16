@@ -10,9 +10,7 @@ import { StateService } from 'src/app/services/state/state.service';
 })
 export class RuleInputComponent implements OnInit {
 
-  currentRules$ = this._rulesService.rules$.pipe(
-    map(rules => rules.filter(rule => rule.deprecated === false)),
-  );
+  currentRules$ = this._rulesService.rules$.asObservable();
 
   constructor(
     private _rulesService: RulesService,
