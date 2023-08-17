@@ -1,0 +1,6 @@
+<select name="dates" id="dates-dropdown" title="something">
+  <option *ngFor="let date of dates$ | async" 
+          [value]="date | date">
+    {{ date | date }}
+  </option>
+</select>
