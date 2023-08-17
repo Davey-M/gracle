@@ -1,4 +1,4 @@
-<select name="dates" id="dates-dropdown" title="something">
+<select title="Pick a date to view or edit">
   <option *ngFor="let date of dates$ | async" 
           [value]="date | date">
     {{ date | date }}

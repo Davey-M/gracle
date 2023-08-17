@@ -20,9 +20,12 @@ export class DatePickerComponent implements OnInit {
   }
 
   private _getDatesFromGracle(store: iGracle[]): Date[] {
-    return store.map(day => {
-      const dateString = day.date;
-      const date = new Date(dateString);
+    return store.map(storeItem => {
+      const dateString = storeItem.date;
+
+      const [ year, month, day ] = dateString.split('-').map(str => parseInt(str));
+
+      const date = new Date(year, month, day);
       return date;
     });
   }
