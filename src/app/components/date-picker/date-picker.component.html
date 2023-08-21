@@ -1,10 +1,17 @@
 <select title="Select a date" (change)="handleInputChange($event)">
-  <option [value]="today.date">Today</option>
+  <option [value]="today.date"
+          [selected]="today.date === (dateParam | async)">
+    Today
+  </option>
   
-  <option [value]="yesterday.date">Yesterday</option>
+  <option [value]="yesterday.date"
+          [selected]="yesterday.date === (dateParam | async)">
+    Yesterday
+  </option>
 
   <option *ngFor="let option of options$ | async"
-          [value]="option.date">
+          [value]="option.date"
+          [selected]="option.date === (dateParam | async)">
     {{ option.value | date }}
   </option>
 </select>

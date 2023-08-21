@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { iDateOption } from 'src/app/models/date';
 import { iGracle } from 'src/app/models/gracle';
@@ -22,8 +22,13 @@ export class DatePickerComponent {
     map(gracleList => this._getOptionsFromList(gracleList)),
   );
 
+  dateParam = this._route.paramMap.pipe(
+    map(paramMap => paramMap.get('date-string')),
+  );
+
   constructor(private _storageService: StorageService,
-              private _router: Router) { }
+              private _router: Router,
+              private _route: ActivatedRoute) { }
 
   public handleInputChange(event: any) {
     const date = event.target.value;
