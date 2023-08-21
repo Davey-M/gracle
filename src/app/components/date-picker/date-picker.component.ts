@@ -13,7 +13,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 export class DatePickerComponent {
 
   today: iDateOption = {
-    date: '',
+    date: this._storageService.getDateString(),
     value: new Date(),
   };
   yesterday: iDateOption = {
@@ -34,12 +34,14 @@ export class DatePickerComponent {
   }
 
   private _getOptionsFromList(gracleList: iGracle[]): iDateOption[] {
-    return gracleList.map(gracle => {
-      return {
-        date: gracle.date,
-        value: this._getDateFromString(gracle.date),
-      }
-    });
+    return gracleList
+      .filter(gracle => gracle.date !== this.today.date && gracle.date !== this.yesterday.date)
+      .map(gracle => {
+        return {
+          date: gracle.date,
+          value: this._getDateFromString(gracle.date),
+        }
+      });
   }
 
   private _getDateFromString(dateString: string): Date {
@@ -51,7 +53,7 @@ export class DatePickerComponent {
     return date;
   }
 
-  private _getPreviousDate(): Date {
+  private _getPreviousDate(): iDateOption {
     throw 'Not implemented yet';
   }
 

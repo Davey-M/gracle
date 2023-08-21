@@ -1,4 +1,8 @@
 <select title="Select a date" (change)="handleInputChange($event)">
+  <option [value]="today.date">Today</option>
+  
+  <option [value]="yesterday.date">Yesterday</option>
+
   <option *ngFor="let option of options$ | async"
           [value]="option.date">
     {{ option.value | date }}
