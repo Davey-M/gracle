@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { combineLatest, map, skipWhile, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, skipWhile, tap } from 'rxjs';
 import { RULES_VERSION, RulesService } from '../rules/rules.service';
 import { StorageService } from '../storage/storage.service';
 import { gracleState, iGracle, iGracleTile, iRule } from 'src/app/models/gracle';
@@ -9,13 +9,16 @@ import { gracleState, iGracle, iGracleTile, iRule } from 'src/app/models/gracle'
 })
 export class StateService {
 
+  private _selectedIndex = 0;
+  selectedGracle$ = new BehaviorSubject<iGracle>(this._storageService.store$.value[0]);
+
   private _tileState: iGracleTile[] | null = null;
   tileState$ = combineLatest([
     this._rulesService.rules$,
-    this._storageService.today$,
+    this.selectedGracle$,
   ]).pipe(
-    skipWhile(([rules, today]) => !rules || !today),
-    map(([rules, today]) => this._formatTileState(rules, today)),
+    skipWhile(([rules, selected]) => !rules || !selected),
+    map(([rules, selected]) => this._formatTileState(rules, selected)),
     tap(state => this._tileState = state),
   );
 
@@ -24,10 +27,10 @@ export class StateService {
     private _storageService: StorageService,
   ) { }
 
-  private _formatTileState(rules: iRule[], today: iGracle): iGracleTile[] {
+  private _formatTileState(rules: iRule[], selected: iGracle): iGracleTile[] {
     return rules
       .map((_, ruleIndex) => {
-        const currentTile = today.results.find(tile => tile.ruleIndex === ruleIndex);
+        const currentTile = selected.results.find(tile => tile.ruleIndex === ruleIndex);
 
         if (currentTile) {
           return currentTile;
@@ -42,8 +45,10 @@ export class StateService {
       });
   }
 
-  updateTile(ruleIndex: number) {
+  public updateTile(ruleIndex: number) {
     if (this._tileState === null) throw 'Tile state is null';
+
+    console.log(this._selectedIndex);
 
     // update todays results
     const updatedResults = this._tileState.map<iGracleTile>(tile => {
@@ -61,12 +66,14 @@ export class StateService {
     const updatedStore = this._storageService.store$.value;
     if (updatedStore === null) throw 'No Gracle store found';
 
-    updatedStore[0] = {
-      date: this._storageService.getDateString(),
+    const updatedGracle = {
+      date: updatedStore[this._selectedIndex].date,
       results: updatedResults,
     };
+    updatedStore[this._selectedIndex] = updatedGracle;
 
     this._storageService.store$.next(updatedStore);
+    this.selectedGracle$.next(updatedGracle);
     this._storageService.saveState();
   }
 
@@ -80,4 +87,35 @@ export class StateService {
         return gracleState.inProgress;
     }
   }
+
+  public selectGracleByDate(dateString: string): void {
+    const store = this._storageService.store$.value;
+
+    const index = store.findIndex(value => value.date === dateString);
+
+    if (index >= 0) {
+      this._selectedIndex = index;
+      const gracle = store[this._selectedIndex];
+      this.selectedGracle$.next(gracle);
+    } else {
+      store.push({
+        date: dateString,
+        results: [],
+      });
+      store.sort((a, b) => {
+        return this._getMSFromDateString(b.date) - this._getMSFromDateString(a.date)
+      });
+
+      this._storageService.store$.next(store);
+      this._storageService.saveState();
+      window.location.reload();
+    }
+  }
+
+  private _getMSFromDateString(dateString: string): number {
+    const [ year, month, day ] = dateString.split('-').map(parseInt);
+    const date = new Date(year, month, day);
+    return date.getTime();
+  }
+
 }

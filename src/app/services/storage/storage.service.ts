@@ -40,9 +40,8 @@ export class StorageService {
     console.log(this.store$.value);
   }
 
-  getDateString(): string {
-    const todaysDate = new Date();
-    return `${todaysDate.getFullYear()}-${todaysDate.getMonth()}-${todaysDate.getDate()}`;
+  getDateString(date: Date = new Date()): string {
+    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
   }
 
   saveState() {
