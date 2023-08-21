@@ -1,6 +1,6 @@
-<select title="Pick a date to view or edit">
-  <option *ngFor="let date of dates$ | async" 
-          [value]="date | date">
-    {{ date | date }}
+<select title="Select a date" (change)="handleInputChange($event)">
+  <option *ngFor="let option of options$ | async"
+          [value]="option.date">
+    {{ option.value | date }}
   </option>
 </select>
