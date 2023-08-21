@@ -16,10 +16,7 @@ export class DatePickerComponent {
     date: this._storageService.getDateString(),
     value: new Date(),
   };
-  yesterday: iDateOption = {
-    date: '',
-    value: new Date(),
-  };
+  yesterday = this._getPreviousDate();
 
   options$ = this._storageService.store$.pipe(
     map(gracleList => this._getOptionsFromList(gracleList)),
@@ -54,7 +51,13 @@ export class DatePickerComponent {
   }
 
   private _getPreviousDate(): iDateOption {
-    throw 'Not implemented yet';
+    const date = new Date();
+    date.setDate(date.getDate() - 1);
+
+    return {
+      date: this._storageService.getDateString(date),
+      value: date,
+    }
   }
 
 }
