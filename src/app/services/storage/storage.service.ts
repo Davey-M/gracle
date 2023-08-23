@@ -36,8 +36,6 @@ export class StorageService {
     }
 
     this.store$.next(store);
-
-    console.log(this.store$.value);
   }
 
   getDateString(date: Date = new Date()): string {
