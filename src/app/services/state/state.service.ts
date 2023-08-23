@@ -12,6 +12,10 @@ export class StateService {
   private _selectedIndex = 0;
   selectedGracle$ = new BehaviorSubject<iGracle>(this._storageService.store$.value[0]);
 
+  selectedDate$ = this.selectedGracle$.pipe(
+    map(gracle => gracle.date),
+  );
+
   private _tileState: iGracleTile[] | null = null;
   tileState$ = combineLatest([
     this._rulesService.rules$,

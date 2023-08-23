@@ -21,10 +21,20 @@ export class OutputDisplayComponent implements OnInit, OnDestroy {
 
   private _unsubscribe$ = new Subject<null>();
 
+  private _dateStringForCopying = '';
+
   constructor(private _stateService: StateService,
               private _rulesService: RulesService) { }
 
   ngOnInit(): void {
+    // This has to be before the next observable 
+    // or the set copy string will be behind.
+    this._stateService.selectedDate$.pipe(
+      takeUntil(this._unsubscribe$),
+    ).subscribe(date => {
+      this._dateStringForCopying = this._formatDate(date);
+    });
+
     combineLatest([
       this._stateService.tileState$,
       this._rulesService.rules$,      
@@ -33,7 +43,7 @@ export class OutputDisplayComponent implements OnInit, OnDestroy {
       skipWhile(([tiles, rules]) => !tiles || !rules),
     ).subscribe(([tiles, rules]) => {
       this._setCopyString(tiles, rules);
-    })
+    });
   }
 
   ngOnDestroy(): void {
@@ -51,7 +61,7 @@ export class OutputDisplayComponent implements OnInit, OnDestroy {
   }
 
   private _setCopyString(tiles: iGracleTile[], rules: iRule[]) {
-    const outputArray: string[] = [];
+    const outputArray: string[] = [ this._dateStringForCopying ];
 
     for (let tile of tiles) {
       const rule = rules[tile.ruleIndex];
@@ -76,6 +86,45 @@ export class OutputDisplayComponent implements OnInit, OnDestroy {
   async copyResults() {
     await navigator.clipboard.writeText(this._resultsCopyString);
     alert('Results were copied to clipboard.');
+  }
+
+  private _formatDate(dateString: string): string {
+    const [ year, month, day ] = dateString.split('-').map(str => parseInt(str));
+
+    const monthStr = this._getReadableMonth(month);
+
+    return `${monthStr} ${day}, ${year}:`;
+  }
+
+  private _getReadableMonth(index: number): string {
+    switch (index) {
+      case 0:
+        return 'Jan';
+      case 1:
+        return 'Feb';
+      case 2:
+        return 'Mar';
+      case 3:
+        return 'Apr';
+      case 4:
+        return 'May';
+      case 5:
+        return 'Jun';
+      case 6:
+        return 'Jul';
+      case 7:
+        return 'Aug';
+      case 8:
+        return 'Sep';
+      case 9:
+        return 'Oct';
+      case 10:
+        return 'Nov';
+      case 11:
+        return 'Dec';
+      default:
+        throw `${index} is not a valid month index`;
+    }
   }
 
 }
