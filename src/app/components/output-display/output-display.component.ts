@@ -89,11 +89,11 @@ export class OutputDisplayComponent implements OnInit, OnDestroy {
   }
 
   private _formatDate(dateString: string): string {
-    const [ year, month, day ] = dateString.split('-').map(str => parseInt(str));
+    const [ _, month, day ] = dateString.split('-').map(str => parseInt(str));
 
     const monthStr = this._getReadableMonth(month);
 
-    return `${monthStr} ${day}, ${year}:`;
+    return `${monthStr} ${day}${this._getNumberEnding(day)}`;
   }
 
   private _getReadableMonth(index: number): string {
@@ -124,6 +124,27 @@ export class OutputDisplayComponent implements OnInit, OnDestroy {
         return 'Dec';
       default:
         throw `${index} is not a valid month index`;
+    }
+  }
+
+  private _getNumberEnding(n: number): string {
+    switch (n) {
+      case 0:
+        return '';
+      case 1:
+      case 21:
+      case 31:
+        return 'st';
+      case 2:
+      case 22:
+      case 32:
+        return 'nd';
+      case 3:
+      case 23:
+      case 33:
+        return 'rd';
+      default:
+        return 'th';
     }
   }
 
