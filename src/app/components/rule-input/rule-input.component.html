@@ -1,8 +1,8 @@
 <div *ngFor="let rule of currentRules$ | async; index as i"
      class="rule-container">
   <p class="rule-text"
-     (mousedown)="handleRuleMouseDown(i)"
-     (mouseup)="handleRuleMouseUp()">
+     (pointerdown)="handleRuleMouseDown(i)"
+     (pointerleave)="handleRuleMouseUp()">
     {{ rule.text }}
     <span *ngIf="(starRuleIndex$ | async) === i"
           class="rule-star">

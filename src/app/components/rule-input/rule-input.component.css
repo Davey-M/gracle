@@ -35,6 +35,9 @@
 .rule-text {
   margin: 0;
   /* text-align: right; */
+
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .line {
