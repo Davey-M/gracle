@@ -1,22 +1,29 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
 import { iGracle } from 'src/app/models/gracle';
+import { iStarRule } from 'src/app/models/star-rule';
+import { RULES_VERSION } from '../rules/rules.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
 
+  LIST_NAME = 'gracle-list';
   store$: BehaviorSubject<iGracle[]> = new BehaviorSubject<iGracle[]>([]);
 
   today$ = this.store$.pipe(
     map(list => list[0]),
   );
 
+  STAR_RULE_NAME = "gracle-star-rule";
+  // star rule index will be -1 if there is no star index
+  starRule$ = new BehaviorSubject<iStarRule | null>(null);
+
   constructor() { }
 
   getState() {
-    let storeString = window.localStorage.getItem('gracle-list');
+    let storeString = window.localStorage.getItem(this.LIST_NAME);
 
     let store: iGracle[];
     if (storeString) {
@@ -36,6 +43,8 @@ export class StorageService {
     }
 
     this.store$.next(store);
+
+    this.retrieveStarRuleIndex();
   }
 
   getDateString(date: Date = new Date()): string {
@@ -43,7 +52,36 @@ export class StorageService {
   }
 
   saveState() {
-    let storeString = JSON.stringify(this.store$.value);
-    window.localStorage.setItem('gracle-list', storeString);
+    // save store
+    const storeString = JSON.stringify(this.store$.value);
+    window.localStorage.setItem(this.LIST_NAME, storeString);
+
+    // save star rule index
+    const starRuleString = JSON.stringify(this.starRule$.value);
+    window.localStorage.setItem(this.STAR_RULE_NAME, starRuleString);
+  }
+
+  retrieveStarRuleIndex() {
+    const starRuleIndexString = window.localStorage.getItem(this.STAR_RULE_NAME);
+
+    if (starRuleIndexString === null) {
+      this.starRule$.next(null);
+    } else {
+      const starRule = JSON.parse(starRuleIndexString);
+      this.starRule$.next(starRule);
+    }
+  }
+
+  setStarRule(ruleIndex: number | null) {
+    if (ruleIndex === null) {
+      this.starRule$.next(null);
+    } else {
+      this.starRule$.next({
+        index: ruleIndex,
+        version: RULES_VERSION,
+      });
+    }
+
+    this.saveState();
   }
 }

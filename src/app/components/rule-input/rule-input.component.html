@@ -1,6 +1,14 @@
 <div *ngFor="let rule of currentRules$ | async; index as i"
      class="rule-container">
-  <p class="rule-text">{{ rule.text }}</p>
+  <p class="rule-text"
+     (mousedown)="handleRuleMouseDown(i)"
+     (mouseup)="handleRuleMouseUp()">
+    {{ rule.text }}
+    <span *ngIf="(starRuleIndex$ | async) === i"
+          class="rule-star">
+      *
+    </span>
+  </p>
   <div class="line"></div>
   <div class="check-box"
        [ngClass]="[ i | stateClass | async ]"
