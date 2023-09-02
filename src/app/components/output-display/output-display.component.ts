@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, combineLatest, map, skipWhile, takeUntil, tap } from 'rxjs';
+import { Subject, combineLatest, map, skipWhile, take, takeUntil, tap } from 'rxjs';
 import { gracleState, iGracleTile, iRule } from 'src/app/models/gracle';
-import { RulesService } from 'src/app/services/rules/rules.service';
+import { RULES_VERSION, RulesService } from 'src/app/services/rules/rules.service';
 import { StateService } from 'src/app/services/state/state.service';
+import { StorageService } from 'src/app/services/storage/storage.service';
 
 @Component({
   selector: 'app-output-display',
@@ -23,8 +24,11 @@ export class OutputDisplayComponent implements OnInit, OnDestroy {
 
   private _dateStringForCopying = '';
 
+  private _starIndex: number = -1;
+
   constructor(private _stateService: StateService,
-              private _rulesService: RulesService) { }
+              private _rulesService: RulesService,
+              private _storageService: StorageService) { }
 
   ngOnInit(): void {
     // This has to be before the next observable 
@@ -34,6 +38,16 @@ export class OutputDisplayComponent implements OnInit, OnDestroy {
     ).subscribe(date => {
       this._dateStringForCopying = this._formatDate(date);
     });
+
+    this._storageService.starRule$.pipe(
+      takeUntil(this._unsubscribe$),
+    ).subscribe(starRule => {
+      if (!starRule || starRule?.version !== RULES_VERSION) {
+        this._starIndex = -1;
+      } else {
+        this._starIndex = starRule.index;
+      }
+    })
 
     combineLatest([
       this._stateService.tileState$,
@@ -66,7 +80,12 @@ export class OutputDisplayComponent implements OnInit, OnDestroy {
     for (let tile of tiles) {
       const rule = rules[tile.ruleIndex];
 
-      outputArray.push(`${this._getTileColor(tile.state)} ${rule?.summary}`);
+      let starRuleString = '';
+      if (tile.ruleIndex === this._starIndex) {
+        starRuleString = '*';
+      }
+
+      outputArray.push(`${this._getTileColor(tile.state)} ${rule?.summary}${starRuleString}`);
     }
 
     this._resultsCopyString = outputArray.join('\n');
