@@ -43,6 +43,11 @@
   border-radius: 4px;
 }
 
+.rule-star {
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
 @keyframes green-resize {
   0% {
     transform: scale(1);
