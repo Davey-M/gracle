@@ -49,8 +49,6 @@ export class RuleInputComponent implements OnInit {
         this._storageService.setStarRule(ruleIndex);
       }
 
-      navigator.vibrate(200);
-
       this._setStarRuleTimeout = null;
     }, 500);
   }
