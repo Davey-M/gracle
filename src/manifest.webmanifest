@@ -1,7 +1,7 @@
 {
-  "name": "gracle",
-  "short_name": "gracle",
-  "theme_color": "#1976d2",
+  "name": "Gracle",
+  "short_name": "Gracle",
+  "theme_color": "#0e9749",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
