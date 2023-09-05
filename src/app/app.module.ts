@@ -10,6 +10,8 @@ import { OutputDisplayComponent } from './components/output-display/output-displ
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
 import { GracleMainComponent } from './components/gracle-main/gracle-main.component';
 import { HandleBlankComponent } from './components/handle-blank/handle-blank.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,12 @@ import { HandleBlankComponent } from './components/handle-blank/handle-blank.com
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
