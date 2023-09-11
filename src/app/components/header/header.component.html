@@ -4,6 +4,25 @@
           (click)="toggleHeaderState()">
     <img src="assets/up-arrow.png" alt="Close" width="100%">
   </button>
+
+  <nav class="nav-container">
+    <a [routerLink]="[ 'date' ]"
+       (click)="toggleHeaderState()"
+       class="nav-link"
+       routerLinkActive="active">
+      <h2>
+        Gracle
+      </h2>
+    </a>
+    <a [routerLink]="[ 'stats' ]"
+       (click)="toggleHeaderState()"
+       class="nav-link"
+       routerLinkActive="active">
+      <h2>
+        Stats
+      </h2>
+    </a>
+  </nav>
 </div>
 
 <header class="app-header" 

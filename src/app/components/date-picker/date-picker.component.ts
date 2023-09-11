@@ -32,7 +32,7 @@ export class DatePickerComponent {
 
   public handleInputChange(event: any) {
     const date = event.target.value;
-    this._router.navigate([ date ]);
+    this._router.navigate([ 'date', date ]);
   }
 
   private _getOptionsFromList(gracleList: iGracle[]): iDateOption[] {

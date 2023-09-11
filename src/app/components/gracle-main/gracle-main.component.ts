@@ -12,7 +12,7 @@ export class GracleMainComponent implements OnInit, OnDestroy {
 
   unsubscribe$ = new Subject<null>();
 
-  dateParam = this._route.paramMap.pipe(
+  dateParam$ = this._route.paramMap.pipe(
     map(paramMap => paramMap.get('date-string')),
   );
 
@@ -20,7 +20,7 @@ export class GracleMainComponent implements OnInit, OnDestroy {
               private _stateService: StateService) { }
 
   ngOnInit(): void {
-    this.dateParam.pipe(
+    this.dateParam$.pipe(
       takeUntil(this.unsubscribe$),
     ).subscribe(dateString => {
       if (dateString !== null) {

@@ -14,7 +14,7 @@ export class HandleBlankComponent implements OnInit {
 
   ngOnInit(): void {
     const dateString = this._storageService.getDateString();
-    this._router.navigate([ dateString ]);
+    this._router.navigate([ 'date', dateString ]);
   }
 
 }

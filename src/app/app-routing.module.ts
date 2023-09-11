@@ -7,7 +7,7 @@ import { ValidDateGuard } from './guards/valid-date/valid-date.guard';
 
 const routes: Routes = [
   { path: 'stats', component: StatsMainComponent },
-  { path: ':date-string', component: GracleMainComponent, canActivate: [ ValidDateGuard ] },
+  { path: 'date/:date-string', component: GracleMainComponent, canActivate: [ ValidDateGuard ] },
   { path: '**', component: HandleBlankComponent }
 ];
 

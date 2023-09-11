@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, combineLatest, fromEvent, map, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css', './nav.header.component.css']
 })
 export class HeaderComponent implements OnInit {
 
@@ -36,7 +37,7 @@ export class HeaderComponent implements OnInit {
     })
   );
 
-  constructor() { }
+  constructor(private _route: ActivatedRoute) { }
 
   ngOnInit(): void {
   }
