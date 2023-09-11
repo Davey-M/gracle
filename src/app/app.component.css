@@ -1,1 +1,6 @@
+.container {
+  min-height: 100vh;
 
+  display: grid;
+  grid-template-rows: max-content 0 1fr;
+}

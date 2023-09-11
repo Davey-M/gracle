@@ -1,0 +1,19 @@
+<div class="main-container" 
+     [ngStyle]="containerStyle$ | async">
+  <button class="icon-button" 
+          (click)="toggleHeaderState()">
+    <img src="assets/up-arrow.png" alt="Close" width="100%">
+  </button>
+</div>
+
+<header class="app-header" 
+        [ngStyle]="headerStyle$ | async">
+  <button class="icon-button" 
+          (click)="toggleHeaderState()">
+    <img src="assets/hamburger.png" alt="Open" width="100%">
+  </button>
+</header>
+
+<div class="spacer">
+
+</div>
