@@ -13,6 +13,7 @@ import { HandleBlankComponent } from './components/handle-blank/handle-blank.com
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { HeaderComponent } from './components/header/header.component';
+import { StatsMainComponent } from './components/stats-main/stats-main.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { HeaderComponent } from './components/header/header.component';
     DatePickerComponent,
     GracleMainComponent,
     HandleBlankComponent,
-    HeaderComponent
+    HeaderComponent,
+    StatsMainComponent
   ],
   imports: [
     BrowserModule,
