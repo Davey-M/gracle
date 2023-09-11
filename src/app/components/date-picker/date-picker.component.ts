@@ -43,6 +43,9 @@ export class DatePickerComponent {
           date: gracle.date,
           value: this._getDateFromString(gracle.date),
         }
+      })
+      .sort((a, b) => {
+        return b.value.getTime() - a.value.getTime();
       });
   }
 
