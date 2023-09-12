@@ -1,0 +1,61 @@
+:host {
+  --header-hight: 3rem;
+  --transition: margin-top ease .3s, box-shadow ease .2s;
+}
+
+.main-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  height: 100vh;
+  width: 100%;
+
+  background-color: var(--green);
+
+  margin-top: -100vh;
+
+  transition: var(--transition);
+}
+
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: var(--header-hight);
+
+  background-color: var(--green);
+
+  color: white;
+
+  transition: var(--transition);
+}
+
+.spacer {
+  height: var(--header-hight);
+  width: 100%;
+}
+
+.icon-button {
+  display: block;
+
+  height: 2rem;
+  width: 2rem;
+
+  margin: .5rem 1rem .5rem auto;
+
+  background: none;
+  border: none;
+  border-radius: 5px;
+
+  padding: .5rem;
+  overflow: hidden;
+
+  cursor: pointer;
+}
+
+.icon-button:hover {
+  background-color: var(--transparent-white);
+}

@@ -12,6 +12,10 @@ import { GracleMainComponent } from './components/gracle-main/gracle-main.compon
 import { HandleBlankComponent } from './components/handle-blank/handle-blank.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { HeaderComponent } from './components/header/header.component';
+import { StatsMainComponent } from './components/stats-main/stats-main.component';
+import { PercentagePipe } from './pipes/percentage/percentage.pipe';
+import { RuleTextPipe } from './pipes/rule-text/rule-text.pipe';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,11 @@ import { environment } from '../environments/environment';
     OutputDisplayComponent,
     DatePickerComponent,
     GracleMainComponent,
-    HandleBlankComponent
+    HandleBlankComponent,
+    HeaderComponent,
+    StatsMainComponent,
+    PercentagePipe,
+    RuleTextPipe
   ],
   imports: [
     BrowserModule,

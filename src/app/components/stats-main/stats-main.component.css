@@ -1,0 +1,32 @@
+.stat-container {
+  max-width: 600px;
+  padding: 0 2rem;
+
+  margin: 2rem auto;
+}
+
+.graph {
+  display: flex;
+
+  height: .8rem;
+
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.line {
+  height: 100%;
+}
+
+.line.green {
+  background-color: var(--green);
+}
+
+.line.yellow {
+  background-color: var(--yellow);
+}
+
+.line.gray {
+  background-color: var(--gray);
+  width: 100%;
+}
