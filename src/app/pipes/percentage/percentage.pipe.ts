@@ -5,8 +5,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class PercentagePipe implements PipeTransform {
 
-  transform(decimal: number): string {
-    return `${(decimal * 100).toFixed(2)}%`;
+  transform(decimal: number, number?: number): string {
+    if (number !== undefined) {
+      return `${number} / ${(decimal * 100).toFixed(2)}%`;
+    } else {
+      return `${(decimal * 100).toFixed(2)}%`;
+    }
   }
 
 }

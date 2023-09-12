@@ -4,14 +4,14 @@
 
   <div class="graph">
     <div class="line green"
-         [attr.title]="stat.totals.succeeded"
+         [attr.title]="stat.percentages.succeeded | percentage:stat.totals.succeeded"
          [ngStyle]="{ width: stat.percentages.succeeded | percentage }"></div>    
 
     <div class="line yellow"
-         [attr.title]="stat.totals.attempted"
+         [attr.title]="stat.percentages.attempted | percentage:stat.totals.attempted"
          [ngStyle]="{ width: stat.percentages.attempted | percentage }"></div>
 
     <div class="line gray"
-         [attr.title]="stat.totals.missed"></div>
+         [attr.title]="stat.percentages.missed | percentage:stat.totals.missed"></div>
   </div>
 </div>

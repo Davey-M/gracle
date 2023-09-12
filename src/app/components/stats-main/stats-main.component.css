@@ -1,25 +1,20 @@
 .stat-container {
   max-width: 600px;
   padding: 0 2rem;
-  margin: auto;
-}
 
-.stat-container:nth-child(n + 2) {
-  margin-top: 2rem;
+  margin: 2rem auto;
 }
 
 .graph {
   display: flex;
 
   height: .8rem;
-  width: 100%;
 
-  min-width: 300px;
+  overflow: hidden;
+  border-radius: 2px;
 }
 
 .line {
-  display: a;
-
   height: 100%;
 }
 
