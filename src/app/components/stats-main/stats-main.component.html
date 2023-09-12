@@ -1,1 +1,17 @@
-<p>stats-main works!</p>
+<div class="stat-container"
+     *ngFor="let stat of stats$ | async">
+  <p>{{ stat.ruleIndex | ruleText:stat.ruleVersion | async }}</p>
+
+  <div class="graph">
+    <div class="line green"
+         [attr.title]="stat.totals.succeeded"
+         [ngStyle]="{ width: stat.percentages.succeeded | percentage }"></div>    
+
+    <div class="line yellow"
+         [attr.title]="stat.totals.attempted"
+         [ngStyle]="{ width: stat.percentages.attempted | percentage }"></div>
+
+    <div class="line gray"
+         [attr.title]="stat.totals.missed"></div>
+  </div>
+</div>

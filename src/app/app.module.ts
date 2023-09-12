@@ -14,6 +14,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { HeaderComponent } from './components/header/header.component';
 import { StatsMainComponent } from './components/stats-main/stats-main.component';
+import { PercentagePipe } from './pipes/percentage/percentage.pipe';
+import { RuleTextPipe } from './pipes/rule-text/rule-text.pipe';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { StatsMainComponent } from './components/stats-main/stats-main.component
     GracleMainComponent,
     HandleBlankComponent,
     HeaderComponent,
-    StatsMainComponent
+    StatsMainComponent,
+    PercentagePipe,
+    RuleTextPipe
   ],
   imports: [
     BrowserModule,

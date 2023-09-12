@@ -1,0 +1,37 @@
+.stat-container {
+  max-width: 600px;
+  padding: 0 2rem;
+  margin: auto;
+}
+
+.stat-container:nth-child(n + 2) {
+  margin-top: 2rem;
+}
+
+.graph {
+  display: flex;
+
+  height: .8rem;
+  width: 100%;
+
+  min-width: 300px;
+}
+
+.line {
+  display: a;
+
+  height: 100%;
+}
+
+.line.green {
+  background-color: var(--green);
+}
+
+.line.yellow {
+  background-color: var(--yellow);
+}
+
+.line.gray {
+  background-color: var(--gray);
+  width: 100%;
+}
