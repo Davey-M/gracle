@@ -5,13 +5,19 @@
   <div class="graph">
     <div class="line green"
          [attr.title]="stat.percentages.succeeded | percentage:stat.totals.succeeded"
-         [ngStyle]="{ width: stat.percentages.succeeded | percentage }"></div>    
+         [ngStyle]="{ width: stat.percentages.succeeded | percentage }">
+      <p class="stat-number green" *ngIf="stat.totals.succeeded > 0">{{ stat.totals.succeeded }}</p>
+    </div>    
 
     <div class="line yellow"
          [attr.title]="stat.percentages.attempted | percentage:stat.totals.attempted"
-         [ngStyle]="{ width: stat.percentages.attempted | percentage }"></div>
+         [ngStyle]="{ width: stat.percentages.attempted | percentage }">
+      <p class="stat-number yellow" *ngIf="stat.totals.attempted > 0">{{ stat.totals.attempted }}</p>
+    </div>
 
     <div class="line gray"
-         [attr.title]="stat.percentages.missed | percentage:stat.totals.missed"></div>
+         [attr.title]="stat.percentages.missed | percentage:stat.totals.missed">
+      <p class="stat-number gray" *ngIf="stat.totals.missed > 0">{{ stat.totals.missed }}</p>
+    </div>
   </div>
 </div>

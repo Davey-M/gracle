@@ -2,7 +2,7 @@
   max-width: 600px;
   padding: 0 2rem;
 
-  margin: 2rem auto;
+  margin: 2rem auto 3rem;
 }
 
 .graph {
@@ -10,11 +10,13 @@
 
   height: .8rem;
 
-  overflow: hidden;
+  /* overflow: hidden; */
   border-radius: 2px;
 }
 
 .line {
+  position: relative;
+
   height: 100%;
 }
 
@@ -29,4 +31,27 @@
 .line.gray {
   background-color: var(--gray);
   width: 100%;
+}
+
+.stat-number {
+  position: absolute;
+  top: calc(100% + .5rem);
+  left: 50%;
+  transform: translateX(-50%);
+
+  margin: 0;
+
+  font-weight: bold;
+}
+
+.stat-number.green {
+  color: var(--green);
+}
+
+.stat-number.yellow {
+  color: var(--yellow);
+}
+
+.stat-number.gray {
+  color: var(--gray);
 }
