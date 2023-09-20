@@ -16,6 +16,8 @@
   margin-top: -100vh;
 
   transition: var(--transition);
+
+  z-index: 2;
 }
 
 .app-header {
