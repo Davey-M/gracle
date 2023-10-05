@@ -11,6 +11,9 @@ export interface iRuleStat {
   totals: iStatCounter;
 
   tiles: iGracleTile[];
+
+  // the style to go on the outer stat wrapper
+  style?: object;
 }
 
 export interface iStatCounter {

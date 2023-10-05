@@ -83,6 +83,8 @@ export class StatsMainComponent implements OnInit {
       ruleStat.percentages.attempted = ruleStat.totals.attempted / total;
       ruleStat.percentages.succeeded = ruleStat.totals.succeeded / total;
 
+      ruleStat.style = { "grid-template-columns": `${ruleStat.totals.succeeded}fr ${ruleStat.totals.attempted}fr ${ruleStat.totals.missed}fr` };
+
       outputStats.push(ruleStat);
     }
 
