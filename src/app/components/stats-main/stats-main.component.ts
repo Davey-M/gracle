@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';
-import { gracleState, iGracle, iGracleTile } from 'src/app/models/gracle';
+import { Subject, debounceTime, delay, map, merge, of, repeat, skipUntil, skipWhile, switchMap, takeUntil, tap, timeout } from 'rxjs';
+import { gracleState, iGracle } from 'src/app/models/gracle';
 import { iRuleStat } from 'src/app/models/stats';
-import { RulesService } from 'src/app/services/rules/rules.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 
 @Component({
@@ -15,6 +14,33 @@ export class StatsMainComponent implements OnInit {
   stats$ = this._storageService.store$.pipe(
     map(store => this._groupByRuleAndVersion(store)),
   );
+
+  mouseEvent$ = new Subject<MouseEvent>();
+
+  popupStart$ = this.mouseEvent$.pipe(
+    map((e) => {
+      return {
+        'left.px': e.x,
+        'top.px': e.y,
+        'opacity': 1,
+      }
+    }),
+  );
+
+  popupEnd$ = this.mouseEvent$.pipe(
+    debounceTime(3_000), // 3 seconds
+    map((e) => {
+      return {
+        'left.px': e.x,
+        'top.px': e.y,
+        'opacity': 0,
+      }
+    }),
+  );
+
+  popupStyle$ = merge(this.popupStart$, this.popupEnd$)
+
+  selectedPercent$ = new Subject<string>();
 
   constructor(private _storageService: StorageService) { }
 
@@ -91,4 +117,9 @@ export class StatsMainComponent implements OnInit {
     return outputStats;
   }
 
+  selectPercent(percent: number, event: MouseEvent) {
+    const percentString = `${(percent * 100).toFixed(2)}%`;
+    this.selectedPercent$.next(percentString);
+    this.mouseEvent$.next(event);
+  }
 }
