@@ -121,9 +121,7 @@ export class StatsMainComponent implements OnInit {
     const percentString = `${(percent * 100).toFixed(2)}%`
       // these splits/joins will remove any trailing 0's
       .split('.00')
-      .join('')
-      .split('0%')
-      .join('%');
+      .join('');
 
     this.selectedPercent$.next(percentString);
     this.mouseEvent$.next(event);
