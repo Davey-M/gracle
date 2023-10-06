@@ -17,7 +17,7 @@ export class StatsMainComponent implements OnInit {
 
   mouseEvent$ = new Subject<MouseEvent>();
 
-  popupStart$ = this.mouseEvent$.pipe(
+  popupStartStyle$ = this.mouseEvent$.pipe(
     map((e) => {
       return {
         'left.px': e.x,
@@ -27,7 +27,7 @@ export class StatsMainComponent implements OnInit {
     }),
   );
 
-  popupEnd$ = this.mouseEvent$.pipe(
+  popupEndStyle$ = this.mouseEvent$.pipe(
     debounceTime(3_000), // 3 seconds
     map((e) => {
       return {
@@ -38,7 +38,7 @@ export class StatsMainComponent implements OnInit {
     }),
   );
 
-  popupStyle$ = merge(this.popupStart$, this.popupEnd$)
+  popupStyle$ = merge(this.popupStartStyle$, this.popupEndStyle$)
 
   selectedPercent$ = new Subject<string>();
 
@@ -118,7 +118,13 @@ export class StatsMainComponent implements OnInit {
   }
 
   selectPercent(percent: number, event: MouseEvent) {
-    const percentString = `${(percent * 100).toFixed(2)}%`;
+    const percentString = `${(percent * 100).toFixed(2)}%`
+      // these splits/joins will remove any trailing 0's
+      .split('.00')
+      .join('')
+      .split('0%')
+      .join('%');
+
     this.selectedPercent$.next(percentString);
     this.mouseEvent$.next(event);
   }
