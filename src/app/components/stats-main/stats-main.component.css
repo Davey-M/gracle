@@ -6,7 +6,8 @@
 }
 
 .graph {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 
   height: .8rem;
 
@@ -54,4 +55,25 @@
 
 .stat-number.gray {
   color: var(--gray);
+}
+
+.percentage-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: max-content;
+
+  padding: 1rem;
+  border-radius: 5px;
+
+  box-shadow: var(--shadow);
+  background-color: white;
+
+  pointer-events: none;
+
+  transform: translate(-50%, -120%);
+
+  opacity: 0;
+  transition: opacity .2s ease;
 }

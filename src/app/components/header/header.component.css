@@ -33,6 +33,8 @@
   color: white;
 
   transition: var(--transition);
+
+  z-index: 2;
 }
 
 .spacer {
