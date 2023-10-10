@@ -71,7 +71,7 @@ export class StatDetailsComponent implements OnInit {
   private _getFakeMonths() {
     const output: iMonthState[] = [];
 
-    const aprDate = new Date(2022, Month.Apr, 1);
+    const aprDate = new Date(2023, Month.Apr, 1);
     output.push({
       name: "April",
       month: Month.Apr,
@@ -82,12 +82,12 @@ export class StatDetailsComponent implements OnInit {
       startIndex: aprDate.getDay()
     });
 
-    const febDate = new Date(2022, Month.Feb, 1);
+    const febDate = new Date(2023, Month.Feb, 1);
     output.push({
       name: "February",
       month: Month.Feb,
-      numOfDays: this._getMonthLength(Month.Feb, 2022),
-      state: new Array(this._getMonthLength(Month.Feb, 2022))
+      numOfDays: this._getMonthLength(Month.Feb, 2023),
+      state: new Array(this._getMonthLength(Month.Feb, 2023))
         .fill(gracleState.empty)
         .map(_ => Math.floor(Math.random() * 4) as gracleState),
       startIndex: febDate.getDay()
