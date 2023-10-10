@@ -105,8 +105,12 @@ export class OutputDisplayComponent implements OnInit, OnDestroy {
   }
 
   async copyResults() {
-    await navigator.clipboard.writeText(this._resultsCopyString);
-    alert('Results were copied to clipboard.');
+    await navigator.share({
+      text: this._resultsCopyString,
+    });
+
+    // await navigator.clipboard.writeText(this._resultsCopyString);
+    // alert('Results were copied to clipboard.');
   }
 
   private _formatDate(dateString: string): string {
