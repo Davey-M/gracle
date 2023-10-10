@@ -1,5 +1,7 @@
 <div class="outer-container">
-  <button (click)="goBack()">Back</button>
+  <a routerLink="/stats">
+    <button>Back</button>
+  </a>
   
   <ng-container *ngIf="rule$ | async as rule">
     <div class="header">

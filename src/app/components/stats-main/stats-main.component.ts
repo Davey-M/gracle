@@ -43,8 +43,7 @@ export class StatsMainComponent implements OnInit {
 
   selectedPercent$ = new Subject<string>();
 
-  constructor(private _storageService: StorageService,
-              private _router: Router) { }
+  constructor(private _storageService: StorageService) { }
 
   ngOnInit(): void {
   }
@@ -127,9 +126,5 @@ export class StatsMainComponent implements OnInit {
 
     this.selectedPercent$.next(percentString);
     this.mouseEvent$.next(event);
-  }
-
-  goToRule(version: string, index: number) {
-    this._router.navigate([ 'stats', version, index ]);
   }
 }

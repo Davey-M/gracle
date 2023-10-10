@@ -30,14 +30,7 @@ export class StatDetailsComponent implements OnInit {
   );
 
   constructor(private _activeRoute: ActivatedRoute,
-              private _router: Router,
               private _ruleService: RulesService) { }
 
-  ngOnInit(): void {
-  }
-
-  goBack() {
-    this._router.navigate([ 'stats' ]);
-  }
-
+  ngOnInit(): void { }
 }
