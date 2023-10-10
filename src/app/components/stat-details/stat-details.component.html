@@ -11,5 +11,33 @@
     </div>
   </ng-container>
 
-  <p>Rule: {{ ruleVersion$ | async }}/{{ ruleIndex$ | async }}</p>
+  <ng-container *ngFor="let month of months$ | async">
+    <ng-container *ngTemplateOutlet="monthTemplate; context: { month }"></ng-container>
+  </ng-container>
+
+  <ng-template #monthTemplate let-month="month">
+    <div class="outer-month-container">
+      <h3 class="month-title">{{ month.name }}</h3>
+      <div class="month-container">
+        <div class="grid-tile grid-header">Sun</div>
+        <div class="grid-tile grid-header">Mon</div>
+        <div class="grid-tile grid-header">Tue</div>
+        <div class="grid-tile grid-header">Wed</div>
+        <div class="grid-tile grid-header">Thu</div>
+        <div class="grid-tile grid-header">Fri</div>
+        <div class="grid-tile grid-header">Sat</div>
+  
+        <div *ngIf="month.startIndex > 0"
+             class="blanking-space"
+             [ngStyle]="{ 'grid-column': 'auto / span ' + month.startIndex }"></div>
+  
+        <div *ngFor="let state of month.state; index as i"
+             class="grid-tile"
+             [ngClass]="[ 'tile-state-' + state ]">
+          {{ i + 1 }}
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
 </div>

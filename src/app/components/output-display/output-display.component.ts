@@ -99,6 +99,8 @@ export class OutputDisplayComponent implements OnInit, OnDestroy {
         return '🟨';
       case gracleState.succeeded:
         return '🟩';
+      case gracleState.empty:
+        return ' ';
     }
   }
 

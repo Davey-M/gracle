@@ -3,6 +3,7 @@ import { BehaviorSubject, combineLatest, map, skipWhile, tap } from 'rxjs';
 import { RULES_VERSION, RulesService } from '../rules/rules.service';
 import { StorageService } from '../storage/storage.service';
 import { gracleState, iGracle, iGracleTile, iRule } from 'src/app/models/gracle';
+import { defaultUrlMatcher } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -89,6 +90,8 @@ export class StateService {
         return gracleState.succeeded;
       case gracleState.succeeded:
         return gracleState.inProgress;
+      default:
+        return gracleState.empty;
     }
   }
 
