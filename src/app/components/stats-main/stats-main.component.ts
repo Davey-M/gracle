@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject, debounceTime, map, merge } from 'rxjs';
 import { gracleState, iGracle } from 'src/app/models/gracle';
 import { iRuleStat } from 'src/app/models/stats';
@@ -42,7 +43,8 @@ export class StatsMainComponent implements OnInit {
 
   selectedPercent$ = new Subject<string>();
 
-  constructor(private _storageService: StorageService) { }
+  constructor(private _storageService: StorageService,
+              private _router: Router) { }
 
   ngOnInit(): void {
   }
@@ -125,5 +127,9 @@ export class StatsMainComponent implements OnInit {
 
     this.selectedPercent$.next(percentString);
     this.mouseEvent$.next(event);
+  }
+
+  goToRule(version: string, index: number) {
+    this._router.navigate([ 'stats', version, index ]);
   }
 }

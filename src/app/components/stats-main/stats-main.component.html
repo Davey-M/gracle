@@ -1,6 +1,12 @@
 <div class="stat-container"
      *ngFor="let stat of stats$ | async">
-  <p>{{ stat.ruleIndex | ruleText:stat.ruleVersion | async }}</p>
+  <p class="stat-header">
+    {{ stat.ruleIndex | ruleText:stat.ruleVersion | async }}
+    <button (click)="goToRule(stat.ruleVersion, stat.ruleIndex)"
+            class="detail-button">
+      Details
+    </button>
+  </p>
 
   <div class="graph"
        [ngStyle]="stat.style">

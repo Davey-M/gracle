@@ -1,0 +1,10 @@
+.outer-container {
+  max-width: 600px;
+  padding: 0 2rem;
+
+  margin: 2rem auto 3rem;
+}
+
+.header {
+  text-align: center;
+}

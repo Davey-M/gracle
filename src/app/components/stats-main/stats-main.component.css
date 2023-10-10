@@ -77,3 +77,8 @@
   opacity: 0;
   transition: opacity .2s ease;
 }
+
+.stat-header {
+  display: flex;
+  justify-content: space-between;
+}
