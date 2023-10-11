@@ -1,0 +1,43 @@
+<div class="outer-container">
+  <a routerLink="/stats">
+    <button>Back</button>
+  </a>
+  
+  <ng-container *ngIf="rule$ | async as rule">
+    <div class="header">
+      <h1>{{ rule.summary | titlecase }}</h1>
+    
+      <p>{{ rule.text }}</p>
+    </div>
+  </ng-container>
+
+  <ng-container *ngFor="let month of months$ | async">
+    <ng-container *ngTemplateOutlet="monthTemplate; context: { month }"></ng-container>
+  </ng-container>
+
+  <ng-template #monthTemplate let-month="month">
+    <div class="outer-month-container">
+      <h3 class="month-title">{{ month.name }} {{ month.year }}</h3>
+      <div class="month-container">
+        <div class="grid-header">Sat</div>
+        <div class="grid-header">Fri</div>
+        <div class="grid-header">Thu</div>
+        <div class="grid-header">Wed</div>
+        <div class="grid-header">Tue</div>
+        <div class="grid-header">Mon</div>
+        <div class="grid-header">Sun</div>
+  
+        <div *ngIf="month.startIndex > 0"
+             class="blanking-space"
+             [ngStyle]="{ 'grid-column': 'auto / span ' + month.startIndex }"></div>
+  
+        <div *ngFor="let state of month.state; index as i"
+             class="grid-tile"
+             [ngClass]="[ 'tile-state-' + state ]">
+          {{ month.numOfDays - i }}
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+</div>

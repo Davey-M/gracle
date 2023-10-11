@@ -99,12 +99,20 @@ export class OutputDisplayComponent implements OnInit, OnDestroy {
         return '🟨';
       case gracleState.succeeded:
         return '🟩';
+      case gracleState.empty:
+        return ' ';
     }
   }
 
   async copyResults() {
-    await navigator.clipboard.writeText(this._resultsCopyString);
-    alert('Results were copied to clipboard.');
+    if (navigator.share) {
+      await navigator.share({
+        text: this._resultsCopyString,
+      });
+    } else {
+      await navigator.clipboard.writeText(this._resultsCopyString);
+      alert('Results were copied to clipboard.');
+    }
   }
 
   private _formatDate(dateString: string): string {

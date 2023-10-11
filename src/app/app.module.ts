@@ -16,6 +16,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { StatsMainComponent } from './components/stats-main/stats-main.component';
 import { PercentagePipe } from './pipes/percentage/percentage.pipe';
 import { RuleTextPipe } from './pipes/rule-text/rule-text.pipe';
+import { StatDetailsComponent } from './components/stat-details/stat-details.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { RuleTextPipe } from './pipes/rule-text/rule-text.pipe';
     HeaderComponent,
     StatsMainComponent,
     PercentagePipe,
-    RuleTextPipe
+    RuleTextPipe,
+    StatDetailsComponent
   ],
   imports: [
     BrowserModule,

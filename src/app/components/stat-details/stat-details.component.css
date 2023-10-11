@@ -1,0 +1,68 @@
+.outer-container {
+  max-width: 600px;
+  padding: 0 2rem;
+
+  margin: 2rem auto 3rem;
+}
+
+.header {
+  text-align: center;
+}
+
+.outer-month-container {
+  margin: 3rem auto;
+}
+
+.month-title {
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.month-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  direction: rtl;
+  text-align: center;
+
+  min-width: max-content;
+  max-width: calc((4rem  * 7) + (2px * 6));
+
+  margin: auto;
+
+  gap: 2px;
+}
+
+.grid-tile {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+
+  display: grid;
+  place-content: center;
+
+  border-radius: 2px;
+}
+
+.tile-state-0 {
+  background-color: var(--gray);
+  color: white;
+}
+
+.tile-state-1 {
+  background-color: var(--yellow);
+  color: var(--black);
+}
+
+.tile-state-2 {
+  background-color: var(--green);
+  color: white;
+}
+
+.grid-header {
+  border-bottom: 2px solid var(--light-gray);
+
+  margin: .5rem 0;
+  border-radius: 0;
+
+  text-align: center;
+  padding: 0 0 5px;
+}

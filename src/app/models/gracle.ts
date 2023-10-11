@@ -14,6 +14,7 @@ export enum gracleState {
   inProgress = 0,
   attempted = 1,
   succeeded = 2,
+  empty = 3,
 }
 
 export interface iRule {
