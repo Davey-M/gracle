@@ -5,7 +5,7 @@
   
   <ng-container *ngIf="rule$ | async as rule">
     <div class="header">
-      <h1>{{ rule.summary }}</h1>
+      <h1>{{ rule.summary | titlecase }}</h1>
     
       <p>{{ rule.text }}</p>
     </div>
@@ -17,7 +17,7 @@
 
   <ng-template #monthTemplate let-month="month">
     <div class="outer-month-container">
-      <h3 class="month-title">{{ month.name }}</h3>
+      <h3 class="month-title">{{ month.name }} {{ month.year }}</h3>
       <div class="month-container">
         <div class="grid-tile grid-header">Sun</div>
         <div class="grid-tile grid-header">Mon</div>

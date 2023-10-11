@@ -25,7 +25,6 @@
 
   min-width: max-content;
   max-width: calc((4rem  * 7) + (2px * 6));
-  width: 100%;
 
   margin: auto;
 

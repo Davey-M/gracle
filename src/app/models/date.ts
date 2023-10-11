@@ -33,6 +33,7 @@ export enum Week {
 export interface iMonthState {
   name: string;
   month: Month;
+  year: number;
   numOfDays: number;
   state: gracleState[];
 

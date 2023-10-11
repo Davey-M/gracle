@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest, from, map, of, skipWhile, switchMap } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { combineLatest, from, map, skipWhile, switchMap } from 'rxjs';
 import { Month, iMonthState } from 'src/app/models/date';
-import { gracleState, iRule } from 'src/app/models/gracle';
+import { gracleState, iGracle } from 'src/app/models/gracle';
 import { RulesService } from 'src/app/services/rules/rules.service';
+import { StorageService } from 'src/app/services/storage/storage.service';
 
 @Component({
   selector: 'app-stat-details',
@@ -13,7 +14,7 @@ import { RulesService } from 'src/app/services/rules/rules.service';
 export class StatDetailsComponent implements OnInit {
 
   ruleVersion$ = this._activeRoute.paramMap.pipe(
-    map(map => map.get('version')),
+    map(map => map.get('version') || 'V1'),
   );
 
   ruleIndex$ = this._activeRoute.paramMap.pipe(
@@ -30,14 +31,21 @@ export class StatDetailsComponent implements OnInit {
     ))
   );
 
-  months$ = of(this._getFakeMonths());
+  months$ = combineLatest([
+    this._storageService.store$,
+    this.ruleVersion$,
+    this.ruleIndex$,
+  ]).pipe(
+    map(([ store, version, index ]) => this._buildMonths(store, version, index)),
+  );
 
   constructor(private _activeRoute: ActivatedRoute,
-              private _ruleService: RulesService) { }
+              private _ruleService: RulesService,
+              private _storageService: StorageService) { }
 
   ngOnInit(): void { }
 
-  private _getMonthLength(month: Month, year: number | null = null) {
+  private _getMonthLength(month: Month, year: number | null = null): number {
     switch (month) {
       case Month.Jan:
         return 31;
@@ -68,31 +76,84 @@ export class StatDetailsComponent implements OnInit {
     }
   }
 
-  private _getFakeMonths() {
+  private _getMonthName(month: Month): string {
+    switch (month) {
+      case Month.Jan:
+        return "January";
+      case Month.Feb:
+        return "February";
+      case Month.Mar:
+        return "March";
+      case Month.Apr:
+        return "April";
+      case Month.May:
+        return "May";
+      case Month.Jun:
+        return "June";
+      case Month.Jul:
+        return "July";
+      case Month.Aug:
+        return "August";
+      case Month.Sep:
+        return "September";
+      case Month.Oct:
+        return "October";
+      case Month.Nov:
+        return "November";
+      case Month.Dec:
+        return "December";
+    }
+  }
+
+  private _buildMonths(store: iGracle[],
+                       version: string,
+                       ruleIndex: number): iMonthState[] {
+
+    const monthMap = new Map<string, iMonthState>();
+
+    // build all months
+    for (let gracle of store) {
+      const [ year, month ] = gracle.date.split('-').map(Number);
+      let key = `${year}-${month}`;
+
+      if (monthMap.has(key)) continue;
+      
+      const startDate = new Date(year, month, 1);
+
+      monthMap.set(key, {
+        year: year,
+        month: month,
+        name: this._getMonthName(month),
+        numOfDays: this._getMonthLength(month),
+        startIndex: startDate.getDay(),
+        state: new Array(this._getMonthLength(month)).fill(gracleState.empty),
+      });
+    }
+
+    // fill the month state
+    for (let gracle of store) {
+      const [ year, month, day ] = gracle.date.split('-').map(Number);
+      const key = `${year}-${month}`;
+      
+      const monthData = monthMap.get(key);
+
+      const tile = gracle.results.find(r => r.version === version && r.ruleIndex === ruleIndex);
+
+      if (!tile || !monthData) continue;
+
+      monthData.state[day - 1] = tile.state;
+      monthMap.set(key, monthData);
+    }
+
+    // build the month output
     const output: iMonthState[] = [];
 
-    const aprDate = new Date(2023, Month.Apr, 1);
-    output.push({
-      name: "April",
-      month: Month.Apr,
-      numOfDays: this._getMonthLength(Month.Apr),
-      state: new Array(this._getMonthLength(Month.Apr))
-        .fill(gracleState.empty)
-        .map(_ => Math.floor(Math.random() * 4) as gracleState),
-      startIndex: aprDate.getDay()
-    });
+    for (let month of monthMap.values()) {
+      output.push(month);
+    }
 
-    const febDate = new Date(2023, Month.Feb, 1);
-    output.push({
-      name: "February",
-      month: Month.Feb,
-      numOfDays: this._getMonthLength(Month.Feb, 2023),
-      state: new Array(this._getMonthLength(Month.Feb, 2023))
-        .fill(gracleState.empty)
-        .map(_ => Math.floor(Math.random() * 4) as gracleState),
-      startIndex: febDate.getDay()
-    });
-
-    return output;
+    return output
+      .sort((a, b) => b.month - a.month)
+      .sort((a, b) => b.year - a.year);
   }
 }
