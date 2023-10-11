@@ -120,14 +120,20 @@ export class StatDetailsComponent implements OnInit {
       
       const startDate = new Date(year, month, 1);
 
-      monthMap.set(key, {
+      const monthToStore = {
         year: year,
         month: month,
         name: this._getMonthName(month),
         numOfDays: this._getMonthLength(month),
-        startIndex: startDate.getDay(),
+        startIndex: 0,
         state: new Array(this._getMonthLength(month)).fill(gracleState.empty),
-      });
+      };
+
+      // this will place the blanking space at the right position to start the month
+      // on the correct day
+      monthToStore.startIndex = 7 - ((monthToStore.numOfDays + startDate.getDay()) % 7);
+
+      monthMap.set(key, monthToStore);
     }
 
     // fill the month state
@@ -149,6 +155,7 @@ export class StatDetailsComponent implements OnInit {
     const output: iMonthState[] = [];
 
     for (let month of monthMap.values()) {
+      month.state.reverse();
       output.push(month);
     }
 
