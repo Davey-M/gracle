@@ -4,7 +4,7 @@ import { BehaviorSubject, catchError } from 'rxjs';
 import { iRule } from 'src/app/models/gracle';
 
 // version will always be in format "v{version number}"
-export const RULES_VERSION = "v1";
+export const RULES_VERSION = "v2";
 
 @Injectable({
   providedIn: 'root'
