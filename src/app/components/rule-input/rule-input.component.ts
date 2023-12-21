@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { map, tap } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs';
+import { iGracle, iRule } from 'src/app/models/gracle';
 import { RULES_VERSION, RulesService } from 'src/app/services/rules/rules.service';
 import { StateService } from 'src/app/services/state/state.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
@@ -11,7 +12,10 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 })
 export class RuleInputComponent implements OnInit {
 
-  currentRules$ = this._rulesService.rules$.asObservable();
+  private _currentState$ = this._stateService.selectedGracle$.asObservable();
+  currentRules$ = this._currentState$.pipe(
+    switchMap(state => this._getRulesFromState(state)),
+  );
 
   private _starRuleIndex: number | null = null;
   starRuleIndex$ = this._storageService.starRule$.pipe(
@@ -56,6 +60,15 @@ export class RuleInputComponent implements OnInit {
   handleRuleMouseUp() {
     if (this._setStarRuleTimeout) {
       clearTimeout(this._setStarRuleTimeout);
+    }
+  }
+
+  private _getRulesFromState(state: iGracle): Promise<iRule[]> {
+    if (state.results.length === 0) {
+      return this._rulesService.getRulesVersion(RULES_VERSION);
+    } else {
+      const version = state.results[0].version;
+      return this._rulesService.getRulesVersion(version);
     }
   }
 
