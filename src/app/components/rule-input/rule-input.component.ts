@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { map, switchMap, tap } from 'rxjs';
+import { Component } from '@angular/core';
+import { map, Observable, switchMap, tap } from 'rxjs';
 import { iGracle, iRule } from 'src/app/models/gracle';
 import { RULES_VERSION, RulesService } from 'src/app/services/rules/rules.service';
 import { StateService } from 'src/app/services/state/state.service';
@@ -10,7 +10,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
   templateUrl: './rule-input.component.html',
   styleUrls: ['./rule-input.component.css']
 })
-export class RuleInputComponent implements OnInit {
+export class RuleInputComponent {
 
   private _currentState$ = this._stateService.selectedGracle$.asObservable();
   currentRules$ = this._currentState$.pipe(
@@ -37,10 +37,6 @@ export class RuleInputComponent implements OnInit {
     private _storageService: StorageService,
   ) { }
 
-  ngOnInit(): void {
-    this._rulesService.getRules();
-  }
-
   updateTile(index: number) {
     this._stateService.updateTile(index);
   }
@@ -63,12 +59,12 @@ export class RuleInputComponent implements OnInit {
     }
   }
 
-  private _getRulesFromState(state: iGracle): Promise<iRule[]> {
+  private _getRulesFromState(state: iGracle): Observable<iRule[]> {
     if (state.results.length === 0) {
-      return this._rulesService.getRulesVersion(RULES_VERSION);
+      return this._rulesService.currentRules$;
     } else {
       const version = state.results[0].version;
-      return this._rulesService.getRulesVersion(version);
+      return this._rulesService.getRules(version);
     }
   }
 

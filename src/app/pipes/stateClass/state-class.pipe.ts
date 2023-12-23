@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, map, } from 'rxjs';
 import { gracleState } from 'src/app/models/gracle';
 import { StateService } from 'src/app/services/state/state.service';
 
@@ -24,7 +24,7 @@ export class StateClassPipe implements PipeTransform {
           default:
             throw `No state exists for tile with index: ${value}`;
         }
-      })
+      }),
     );
   }
 }

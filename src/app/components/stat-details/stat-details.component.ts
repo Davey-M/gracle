@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, from, map, skipWhile, switchMap } from 'rxjs';
+import { combineLatest, map, skipWhile, switchMap } from 'rxjs';
 import { Month, iMonthState } from 'src/app/models/date';
 import { gracleState, iGracle } from 'src/app/models/gracle';
 import { RulesService } from 'src/app/services/rules/rules.service';
@@ -24,7 +24,7 @@ export class StatDetailsComponent implements OnInit {
   rule$ = this.ruleVersion$.pipe(
     skipWhile(v => !v),
     switchMap(v => combineLatest([
-      from(this._ruleService.getRulesVersion(v!)),
+      this._ruleService.getRules(v!),
       this.ruleIndex$,
     ]).pipe(
       map(([ rules, index ]) => rules[index] || null)
@@ -117,7 +117,7 @@ export class StatDetailsComponent implements OnInit {
       let key = `${year}-${month}`;
 
       if (monthMap.has(key)) continue;
-      
+
       const startDate = new Date(year, month, 1);
 
       const monthToStore = {
@@ -140,7 +140,7 @@ export class StatDetailsComponent implements OnInit {
     for (let gracle of store) {
       const [ year, month, day ] = gracle.date.split('-').map(Number);
       const key = `${year}-${month}`;
-      
+
       const monthData = monthMap.get(key);
 
       const tile = gracle.results.find(r => r.version === version && r.ruleIndex === ruleIndex);

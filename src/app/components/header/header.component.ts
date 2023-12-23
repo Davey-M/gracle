@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, combineLatest, fromEvent, map, startWith } from 'rxjs';
 
 @Component({
@@ -16,7 +15,7 @@ export class HeaderComponent implements OnInit {
     startWith(() => window.scrollY > 0),
     map(() => window.scrollY > 0)
   );
-  
+
   containerStyle$ = this._isOpen$.pipe(
     map(isOpen => {
       return {
@@ -37,7 +36,7 @@ export class HeaderComponent implements OnInit {
     })
   );
 
-  constructor(private _route: ActivatedRoute) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
