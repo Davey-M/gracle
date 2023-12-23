@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError } from 'rxjs';
+import { BehaviorSubject, catchError, map, switchMap, zip } from 'rxjs';
 import { iRule } from 'src/app/models/gracle';
 
 // version will always be in format "v{version number}"
@@ -14,6 +14,23 @@ export class RulesService {
   rules$ = new BehaviorSubject<iRule[]>([]);
 
   private _versionedRules = new Map<string, iRule[]>();
+
+  private _trigger$ = new BehaviorSubject<null>(null);
+  private _versionsIndex$ = this._trigger$.pipe(
+    switchMap(() => this._http.get<string[]>('/assets/rules/versions-index.json')),
+  );
+
+  rulesMap$ = this._versionsIndex$.pipe(
+    switchMap(versions =>
+      zip(versions.map((v) => this._http.get<iRule[]>(`/assets/rules/${v}.json`))).pipe(
+        map(rules => this._getRuleMap(versions, rules)),
+      ),
+    ),
+  );
+
+  currentRules$ = this.rulesMap$.pipe(
+    map(rules => rules.get(RULES_VERSION)),
+  );
 
   constructor(private _http: HttpClient) { }
 
@@ -49,5 +66,13 @@ export class RulesService {
           });
       });
     }
+  }
+
+  private _getRuleMap(versions: string[], rules: iRule[][]): Map<string, iRule[]> {
+    const outputMap = new Map<string, iRule[]>();
+    for (let i = 0; i < versions.length; i++) {
+      outputMap.set(versions[i], rules[i]);
+    }
+    return outputMap;
   }
 }
