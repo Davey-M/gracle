@@ -5,6 +5,7 @@ import { Month, iMonthState } from 'src/app/models/date';
 import { gracleState, iGracle } from 'src/app/models/gracle';
 import { RulesService } from 'src/app/services/rules/rules.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { UtilsService } from 'src/app/services/utils/utils.service';
 
 @Component({
   selector: 'app-stat-details',
@@ -36,12 +37,13 @@ export class StatDetailsComponent implements OnInit {
     this.ruleVersion$,
     this.ruleIndex$,
   ]).pipe(
-    map(([ store, version, index ]) => this._buildMonths(store, version, index)),
+    switchMap(([ store, version, index ]) => this._buildMonths(store, version, index)),
   );
 
   constructor(private _activeRoute: ActivatedRoute,
               private _ruleService: RulesService,
-              private _storageService: StorageService) { }
+              private _storageService: StorageService,
+              private _utils: UtilsService) { }
 
   ngOnInit(): void { }
 
@@ -105,11 +107,15 @@ export class StatDetailsComponent implements OnInit {
     }
   }
 
-  private _buildMonths(store: iGracle[],
+  private async _buildMonths(store: iGracle[],
                        version: string,
-                       ruleIndex: number): iMonthState[] {
+                       ruleIndex: number): Promise<iMonthState[]> {
 
     const monthMap = new Map<string, iMonthState>();
+
+    // this is the id used to determine if the tiles are the same across versions
+    const rules = await this._ruleService.getRulesAsync(version)
+    const detailId = rules[ruleIndex].id;
 
     // build all months
     for (let gracle of store) {
@@ -143,10 +149,14 @@ export class StatDetailsComponent implements OnInit {
 
       const monthData = monthMap.get(key);
 
-      const tile = gracle.results.find(r => r.version === version && r.ruleIndex === ruleIndex);
+      // get the tile index that has the corresponding rule id
+      // this is done because rules might be the same between versions
+      const ruleIds = await Promise.all(gracle.results.map(t => this._utils.getRuleId(t)))
+      const tileIndex = ruleIds.findIndex(id => id === detailId);
 
-      if (!tile || !monthData) continue;
+      if (tileIndex < 0 || !monthData) continue;
 
+      const tile = gracle.results[tileIndex];
       monthData.state[day - 1] = tile.state;
       monthMap.set(key, monthData);
     }

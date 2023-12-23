@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, filter, map, Observable, Subject, switchMap, takeUntil, zip } from 'rxjs';
+import { BehaviorSubject, filter, firstValueFrom, map, Observable, Subject, switchMap, takeUntil, zip } from 'rxjs';
 import { iRule } from 'src/app/models/gracle';
 
 // version will always be in format "v{version number}"
@@ -46,6 +46,10 @@ export class RulesService implements OnDestroy {
       filter(rules => rules?.has(version)),
       map(rules => rules.get(version) as iRule[]),
     );
+  }
+
+  getRulesAsync(version: string): Promise<iRule[]> {
+    return firstValueFrom(this.getRules(version));
   }
 
   private _getRuleMap(versions: string[], rules: iRule[][]): Map<string, iRule[]> {

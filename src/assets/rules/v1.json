@@ -1,29 +1,36 @@
 [
   {
+    "id": "v1-0",
     "text": "Morning prayer",
     "summary": "Morning prayer"
   },
   {
+    "id": "v1-1",
     "text": "Daily Reading for the Sunday Mass (1 each day)",
     "summary": "Daily reading"
   },
   {
+    "id": "v1-2",
     "text": "Adoration (At least 15 minutes a week)",
     "summary": "Adoration"
   },
   {
+    "id": "v1-3",
     "text": "Avoid mortal sin / masturbation",
     "summary": "No mortal sin"
   },
   {
+    "id": "v1-4",
     "text": "Weekly journal entry",
     "summary": "Journal"
   },
   {
+    "id": "v1-5",
     "text": "Confession",
     "summary": "Confession"
   },
   {
+    "id": "v1-6",
     "text": "Nightly examine",
     "summary": "Nightly examine"
   }

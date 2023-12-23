@@ -18,6 +18,7 @@ export enum gracleState {
 }
 
 export interface iRule {
+  id: string;
   text: string;
   summary: string;
 }
