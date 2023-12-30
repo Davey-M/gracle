@@ -26,7 +26,7 @@ export class GracleMainComponent implements OnInit, OnDestroy {
       if (dateString !== null) {
         this._stateService.selectGracleByDate(dateString);
       }
-    })
+    });
   }
 
   ngOnDestroy(): void {

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subject, debounceTime, map, merge } from 'rxjs';
+import { Subject, debounceTime, map, merge, switchMap } from 'rxjs';
 import { gracleState, iGracle } from 'src/app/models/gracle';
 import { iRuleStat } from 'src/app/models/stats';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { UtilsService } from 'src/app/services/utils/utils.service';
 
 @Component({
   selector: 'app-stats-main',
@@ -13,7 +13,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 export class StatsMainComponent implements OnInit {
 
   stats$ = this._storageService.store$.pipe(
-    map(store => this._groupByRuleAndVersion(store)),
+    switchMap(store => this._groupByRuleAndVersion(store)),
   );
 
   mouseEvent$ = new Subject<MouseEvent>();
@@ -43,12 +43,13 @@ export class StatsMainComponent implements OnInit {
 
   selectedPercent$ = new Subject<string>();
 
-  constructor(private _storageService: StorageService) { }
+  constructor(private _storageService: StorageService,
+              private _utils: UtilsService) { }
 
   ngOnInit(): void {
   }
 
-  private _groupByRuleAndVersion(store: iGracle[]): iRuleStat[] {
+  private async _groupByRuleAndVersion(store: iGracle[]): Promise<iRuleStat[]> {
 
     // the key for the map is a string of `${version}-${ruleIndex}`
     const ruleStatMap = new Map<string, iRuleStat>();
@@ -56,7 +57,7 @@ export class StatsMainComponent implements OnInit {
     // format all of the stats except for the percentage
     for (let item of store) {
       for (let tile of item.results) {
-        const id = `${tile.version}-${tile.ruleIndex}`;
+        const id = await this._utils.getRuleId(tile);
 
         if (ruleStatMap.has(id)) {
           const current = ruleStatMap.get(id)!;

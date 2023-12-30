@@ -1,0 +1,37 @@
+[
+  {
+    "id": "v2-0",
+    "text": "Daily Prayer",
+    "summary": "Daily Prayer"
+  },
+  {
+    "id": "v2-1",
+    "text": "Daily Reading",
+    "summary": "Daily Reading"
+  },
+  {
+    "id": "v2-2",
+    "text": "Daily Exercise",
+    "summary": "Daily Exercise"
+  },
+  {
+    "id": "v1-3",
+    "text": "Avoid Mortal Sin",
+    "summary": "No Mortal Sin"
+  },
+  {
+    "id": "v2-4",
+    "text": "Daily Fasting / Penance",
+    "summary": "Daily Mortification"
+  },
+  {
+    "id": "v2-5",
+    "text": "Daily Outreach",
+    "summary": "Daily Outreach"
+  },
+  {
+    "id": "v1-6",
+    "text": "Nightly Examine",
+    "summary": "Nightly Examine"
+  }
+]

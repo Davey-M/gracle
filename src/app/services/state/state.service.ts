@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, map, skipWhile, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, skipWhile, switchMap, tap } from 'rxjs';
 import { RULES_VERSION, RulesService } from '../rules/rules.service';
 import { StorageService } from '../storage/storage.service';
 import { gracleState, iGracle, iGracleTile, iRule } from 'src/app/models/gracle';
-import { defaultUrlMatcher } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +16,20 @@ export class StateService {
     map(gracle => gracle.date),
   );
 
+  selectedRules$ = this.selectedGracle$.pipe(
+    switchMap(gracle => {
+      if (gracle.results.length === 0) {
+        return this._rulesService.currentRules$;
+      } else {
+        const version = gracle.results[0].version;
+        return this._rulesService.getRules(version);
+      }
+    }),
+  );
+
   private _tileState: iGracleTile[] | null = null;
   tileState$ = combineLatest([
-    this._rulesService.rules$,
+    this.selectedRules$,
     this.selectedGracle$,
   ]).pipe(
     skipWhile(([rules, selected]) => !rules || !selected),

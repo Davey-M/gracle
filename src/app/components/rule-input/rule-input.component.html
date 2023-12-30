@@ -4,13 +4,16 @@
      (pointerdown)="handleRuleMouseDown(i)"
      (pointerleave)="handleRuleMouseUp()">
     {{ rule.text }}
-    <span *ngIf="(starRuleIndex$ | async) === i"
-          class="rule-star">
-      *
-    </span>
+    <ng-container *ngIf="showStarRule$ | async">
+      <span *ngIf="(starRuleIndex$ | async) === i"
+        class="rule-star">
+        *
+      </span>
+    </ng-container>
   </p>
   <div class="line"></div>
   <div class="check-box"
        [ngClass]="[ i | stateClass | async ]"
        (click)="updateTile(i)"></div>
 </div>
+

@@ -12,10 +12,8 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 })
 export class OutputDisplayComponent implements OnInit, OnDestroy {
 
-  private _gracleResultString = '';
   gracleResultString$ = this._stateService.tileState$.pipe(
     map(tiles => this._formatStateToString(tiles)),
-    tap(str => this._gracleResultString = str),
   );
 
   private _resultsCopyString = '';
@@ -31,7 +29,7 @@ export class OutputDisplayComponent implements OnInit, OnDestroy {
               private _storageService: StorageService) { }
 
   ngOnInit(): void {
-    // This has to be before the next observable 
+    // This has to be before the next observable
     // or the set copy string will be behind.
     this._stateService.selectedDate$.pipe(
       takeUntil(this._unsubscribe$),
@@ -51,12 +49,12 @@ export class OutputDisplayComponent implements OnInit, OnDestroy {
 
     combineLatest([
       this._stateService.tileState$,
-      this._rulesService.rules$,      
+      this._rulesService.currentRules$,
     ]).pipe(
       takeUntil(this._unsubscribe$),
       skipWhile(([tiles, rules]) => !tiles || !rules),
     ).subscribe(([tiles, rules]) => {
-      this._setCopyString(tiles, rules);
+      this._setCopyString(tiles, rules!);
     });
   }
 
