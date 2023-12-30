@@ -17,6 +17,10 @@ export class RuleInputComponent {
     switchMap(state => this._getRulesFromState(state)),
   );
 
+  showStarRule$ = this._currentState$.pipe(
+    map(state => this._getStarRuleShown(state)),
+  );
+
   private _starRuleIndex: number | null = null;
   starRuleIndex$ = this._storageService.starRule$.pipe(
     map(starRule => {
@@ -66,6 +70,15 @@ export class RuleInputComponent {
       const version = state.results[0].version;
       return this._rulesService.getRules(version);
     }
+  }
+
+  /**
+    * The star rule will only be shown no the current version
+    */
+  private _getStarRuleShown(state: iGracle) {
+    if (state.results.length === 0) return true;
+
+    return state.results[0].version === RULES_VERSION;
   }
 
 }
