@@ -17,6 +17,8 @@ import { StatsMainComponent } from './components/stats-main/stats-main.component
 import { PercentagePipe } from './pipes/percentage/percentage.pipe';
 import { RuleTextPipe } from './pipes/rule-text/rule-text.pipe';
 import { StatDetailsComponent } from './components/stat-details/stat-details.component';
+import { StorageService } from './models/storage';
+import { storageServiceFactory } from './services/storage/storage-service-factory';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,12 @@ import { StatDetailsComponent } from './components/stat-details/stat-details.com
       registrationStrategy: 'registerWhenStable:30000'
     }),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: StorageService,
+      useFactory: storageServiceFactory
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

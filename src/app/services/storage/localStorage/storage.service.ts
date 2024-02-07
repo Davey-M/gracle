@@ -3,11 +3,12 @@ import { BehaviorSubject, map } from 'rxjs';
 import { iGracle } from 'src/app/models/gracle';
 import { iStarRule } from 'src/app/models/star-rule';
 import { RULES_VERSION } from '../../rules/rules.service';
+import { StorageService } from 'src/app/models/storage';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LocalStorageService {
+export class LocalStorageService implements StorageService {
 
   LIST_NAME = 'gracle-list';
   store$: BehaviorSubject<iGracle[]> = new BehaviorSubject<iGracle[]>([]);

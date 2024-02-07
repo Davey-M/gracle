@@ -1,9 +1,17 @@
 import { Injectable } from '@angular/core';
+import { StorageService } from 'src/app/models/storage';
+
+const DATABASE_NAME = "gracle-db";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class DbStorageService {
+export class DbStorageService implements StorageService {
 
-  constructor() { }
+  db: IDBDatabase;
+
+  constructor(db: IDBDatabase) {
+    this.db = db;
+  }
 }
+
