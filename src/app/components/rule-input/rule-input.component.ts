@@ -3,7 +3,7 @@ import { map, Observable, switchMap, tap } from 'rxjs';
 import { iGracle, iRule } from 'src/app/models/gracle';
 import { RULES_VERSION, RulesService } from 'src/app/services/rules/rules.service';
 import { StateService } from 'src/app/services/state/state.service';
-import { StorageService } from 'src/app/services/storage/storage.service';
+import { LocalStorageService } from 'src/app/services/storage/localStorage/storage.service';
 
 @Component({
   selector: 'app-rule-input',
@@ -38,7 +38,7 @@ export class RuleInputComponent {
   constructor(
     private _rulesService: RulesService,
     private _stateService: StateService,
-    private _storageService: StorageService,
+    private _storageService: LocalStorageService,
   ) { }
 
   updateTile(index: number) {

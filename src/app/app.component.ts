@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StorageService } from './services/storage/storage.service';
+import { LocalStorageService } from './services/storage/localStorage/storage.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,7 @@ import { StorageService } from './services/storage/storage.service';
 export class AppComponent implements OnInit {
   title = 'gracle';
 
-  constructor(private _storageService: StorageService) { }
+  constructor(private _storageService: LocalStorageService) { }
 
   ngOnInit(): void {
       this._storageService.getState();

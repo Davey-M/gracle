@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, map, skipWhile, switchMap, tap } from 'rxjs';
 import { RULES_VERSION, RulesService } from '../rules/rules.service';
-import { StorageService } from '../storage/storage.service';
+import { LocalStorageService } from '../storage/localStorage/storage.service';
 import { gracleState, iGracle, iGracleTile, iRule } from 'src/app/models/gracle';
 
 @Injectable({
@@ -39,7 +39,7 @@ export class StateService {
 
   constructor(
     private _rulesService: RulesService,
-    private _storageService: StorageService,
+    private _storageService: LocalStorageService,
   ) { }
 
   private _formatTileState(rules: iRule[], selected: iGracle): iGracleTile[] {

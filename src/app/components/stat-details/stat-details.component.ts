@@ -4,7 +4,7 @@ import { combineLatest, map, skipWhile, switchMap } from 'rxjs';
 import { Month, iMonthState } from 'src/app/models/date';
 import { gracleState, iGracle } from 'src/app/models/gracle';
 import { RulesService } from 'src/app/services/rules/rules.service';
-import { StorageService } from 'src/app/services/storage/storage.service';
+import { LocalStorageService } from 'src/app/services/storage/localStorage/storage.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 
 @Component({
@@ -42,7 +42,7 @@ export class StatDetailsComponent implements OnInit {
 
   constructor(private _activeRoute: ActivatedRoute,
               private _ruleService: RulesService,
-              private _storageService: StorageService,
+              private _storageService: LocalStorageService,
               private _utils: UtilsService) { }
 
   ngOnInit(): void { }

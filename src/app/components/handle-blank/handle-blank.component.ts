@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { StorageService } from 'src/app/services/storage/storage.service';
+import { LocalStorageService } from 'src/app/services/storage/localStorage/storage.service';
 
 @Component({
   selector: 'app-handle-blank',
@@ -10,7 +10,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 export class HandleBlankComponent implements OnInit {
 
   constructor(private _router: Router,
-              private _storageService: StorageService) { }
+              private _storageService: LocalStorageService) { }
 
   ngOnInit(): void {
     const dateString = this._storageService.getDateString();

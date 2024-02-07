@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { iDateOption } from 'src/app/models/date';
 import { iGracle } from 'src/app/models/gracle';
-import { StorageService } from 'src/app/services/storage/storage.service';
+import { LocalStorageService } from 'src/app/services/storage/localStorage/storage.service';
 
 @Component({
   selector: 'app-date-picker',
@@ -26,7 +26,7 @@ export class DatePickerComponent {
     map(paramMap => paramMap.get('date-string')),
   );
 
-  constructor(private _storageService: StorageService,
+  constructor(private _storageService: LocalStorageService,
               private _router: Router,
               private _route: ActivatedRoute) { }
 

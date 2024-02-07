@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject, debounceTime, map, merge, switchMap } from 'rxjs';
 import { gracleState, iGracle } from 'src/app/models/gracle';
 import { iRuleStat } from 'src/app/models/stats';
-import { StorageService } from 'src/app/services/storage/storage.service';
+import { LocalStorageService } from 'src/app/services/storage/localStorage/storage.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 
 @Component({
@@ -43,7 +43,7 @@ export class StatsMainComponent implements OnInit {
 
   selectedPercent$ = new Subject<string>();
 
-  constructor(private _storageService: StorageService,
+  constructor(private _storageService: LocalStorageService,
               private _utils: UtilsService) { }
 
   ngOnInit(): void {

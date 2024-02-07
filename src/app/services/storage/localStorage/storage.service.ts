@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
 import { iGracle } from 'src/app/models/gracle';
 import { iStarRule } from 'src/app/models/star-rule';
-import { RULES_VERSION } from '../rules/rules.service';
+import { RULES_VERSION } from '../../rules/rules.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class StorageService {
+export class LocalStorageService {
 
   LIST_NAME = 'gracle-list';
   store$: BehaviorSubject<iGracle[]> = new BehaviorSubject<iGracle[]>([]);
