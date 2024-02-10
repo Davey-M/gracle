@@ -1,8 +1,8 @@
-import { iStorageService:w } from "src/app/models/storage";
+import { StorageService } from "src/app/models/storage";
 import { LocalStorageService } from "./localStorage/storage.service";
 
-export function storageServiceFactory(): Promise<iStorageService> {
-  return new Promise<iStorageService:w>(resolve => {
+export function storageServiceFactory(): Promise<StorageService> {
+  return new Promise<StorageService>(resolve => {
     resolve(new LocalStorageService());
   })
 }
