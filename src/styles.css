@@ -14,10 +14,12 @@ p {
 }
 
 :root {
+  --lighter-gray: #eeeeee;
   --light-gray: #a9b7cb;
   --gray: #454c55;
   --yellow: #fbc335;
   --green: #0e9749;
+  --light-green: #6cb88d;
   --blue: #67a3f7;
 
   --black: #333;
@@ -26,3 +28,24 @@ p {
 
   --transparent-white: #ffffff51;
 }
+
+button, input, select {
+  border: 2px solid var(--green);
+  border-radius: 100px;
+  padding: .5rem 1rem;
+
+  background-color: transparent;
+  color: var(--black);
+
+  font-weight: 600;
+}
+
+button:hover, input:hover, select:hover {
+  background-color: var(--lighter-gray);
+}
+
+button:active, input:active, select:active {
+  border-color: var(--yellow);
+  color: var(--black)
+}
+
